@@ -7,6 +7,9 @@ class FetchUsersJob < ApplicationJob
     conn = Faraday.new(url: 'https://randomuser.me')
     response = conn.get('/api/', { results: 20 })
     records = JSON.parse(response.body)['results']
+
+    # Store fetched data into user table
+    User.store(records)
     
     # Update the total counts of male and female records in Redis
     update_redis_counts(records)
