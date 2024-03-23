@@ -16,15 +16,18 @@ class DailyRecord < ApplicationRecord
 
   # Updates the male and female counts after user deletion
   def self.update_stats_after_user_deletion(user)
-    if user.gender == 'male'
-      decrement(:male_count)
-    elsif user.gender == 'female'
-      decrement(:female_count)
-    end
-
     daily_record = find_by(date: current_date)
-    daily_record.save if daily_record&.persisted? && daily_record.saved_changes?
-  end
+    
+    if daily_record&.persisted? && daily_record.saved_changes?
+      if user.gender == 'male'
+        daily_record.decrement(:male_count)
+      elsif user.gender == 'female'
+        daily_record.decrement(:female_count)
+      end
+  
+      daily_record.save
+    end
+  end  
   
   # Calculates the average age based on male and female counts
   def calculate_average_age
