@@ -1,0 +1,74 @@
+<h2><%= link_to "Users & Daily Records", root_path, style: 'text-decoration: none;' %></h2>
+
+<%= form_tag(users_path, method: "get", class: 'form-horizontal') do %>
+  <%= label_tag :name, "Name" %>
+  <%= text_field_tag 'search[name]', params.dig(:search, :name) %>
+  
+  <%= label_tag :age, "Age" %>
+  <%= number_field_tag 'search[age]', params.dig(:search, :age) %>
+  
+  <%= label_tag :gender, "Gender" %>
+  <%= select_tag 'search[gender]', options_for_select(["-- options --", "male", "female"], params.dig(:search, :gender)), include_blank: true %>
+  
+  <%= label_tag :created_at, "Created At" %>
+  <%= date_field_tag 'search[created_at]', params.dig(:search, :created_at) %>
+  
+  <%= submit_tag "Search" %>
+  <%= link_to 'Clear', users_path(search: {}), style: 'display: inline-block; padding: 0.2rem 0.5rem; background-color: #f00; color: #fff; text-decoration: none; border: none; border-radius: 0.25rem;' %>
+<% end %>
+
+<br>
+<br>
+<%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+<br>
+<%== pagy_info(@pagy).sub('items', '<u><b>users</b></u>').html_safe %>
+<br>
+<br>
+
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+  }
+
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <td colspan="5" style="text-align: center;">
+        <p><h3>Users</h3></p>
+        <p><h4>Total: <%= @total_users %></h4></p>
+      </td>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th>age</th>
+      <th>gender</th>
+      <th>created_at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.liquid_name %></td>
+        <td><%= user.age %></td>
+        <td><%= user.gender %></td>
+        <td><%= user.created_at %></td>
+        <td>
+          <%= link_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<br>
+<br>
+<%= render partial: "daily_records", locals: { daily_records: @daily_records } %>

@@ -76,4 +76,8 @@ Rails.application.configure do
 
   # Allow access to the console from any IP address
   config.web_console.whitelisted_ips = '0.0.0.0/0'
+
+  # Redis configuration
+  config.redis_url = "redis://#{ENV['REDIS_HOST']}:6379"
+  config.redis_db = ENV['REDIS_DB_DEV']
 end

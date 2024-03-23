@@ -50,6 +50,7 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle config set --local path '/usr/local/bundle'
 RUN bundle install --jobs "$(nproc)" --retry 5
 RUN bundle exec bootsnap precompile app/ lib/
+RUN bundle exec rails db:prepare
 
 # Copy application code
 COPY . ./

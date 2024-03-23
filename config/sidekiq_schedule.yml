@@ -1,0 +1,11 @@
+fetch_users_job:
+  description: "Fetches 20 user records from an external API every hour"
+  cron: "0 * * * *" # Run every hour
+  class: "FetchUsersJob"
+  status: "enabled"
+
+tabulate_daily_records_job:
+  description: "Tabulates the total number of male and female records captured within the day from Redis and stores the count in the DailyRecord table"
+  cron: "59 23 * * *" # Run at 11:59 PM every day
+  class: "TabulateDailyRecordsJob"
+  status: "enabled"

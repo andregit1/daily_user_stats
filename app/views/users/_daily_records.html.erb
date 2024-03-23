@@ -1,0 +1,25 @@
+<table>
+  <thead>
+    <tr>
+      <td colspan="5" style="text-align: center;"><h3>Daily Records</h3></td>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th>Male Count</th>
+      <th>Female Count</th>
+      <th>Male Avg Age</th>
+      <th>Female Avg Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% daily_records.each do |daily_record| %>
+      <tr>
+        <td><%= daily_record.date %></td>
+        <td><%= daily_record.male_count || 0 %></td>
+        <td><%= daily_record.female_count || 0 %></td>
+        <td><%= daily_record.male_avg_age || 0 %></td>
+        <td><%= daily_record.female_avg_age || 0 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
