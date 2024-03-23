@@ -13,7 +13,8 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     DailyRecord.update_stats_after_user_deletion(@user)
-    redirect_to users_path
+    # redirect_to users_path
+    redirect_to action: :index, notice: "User #{@user.name[:first]} was successfully destroyed.", status: :see_other
   end
 
   private

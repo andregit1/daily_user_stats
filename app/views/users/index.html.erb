@@ -62,7 +62,7 @@
         <td><%= user.gender %></td>
         <td><%= user.created_at %></td>
         <td>
-          <%= link_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }%>
+          <%= link_to 'Delete', user, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "nav-link" %>
         </td>
       </tr>
     <% end %>
