@@ -7,8 +7,8 @@ sidekiq_config = { url: "#{Rails.configuration.redis_url}/#{Rails.configuration.
 Sidekiq.configure_server do |config|
   config.redis = sidekiq_config
   config.on(:startup) do
-    Sidekiq.schedule = YAML.load_file(File.expand_path('config/sidekiq_schedule.yml', Rails.root))
-    Sidekiq::Cron::Job.load_from_hash(Sidekiq.schedule)
+    schedule_file = Rails.root.join('config', 'sidekiq_schedule.yml')
+    Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file) if File.exist?(schedule_file) && Sidekiq.server?
   end
 end
 
